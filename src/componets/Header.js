@@ -22,7 +22,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
         dispatch(
@@ -39,6 +39,8 @@ const Header = () => {
         navigate("/");
       }
     });
+
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -52,7 +54,7 @@ const Header = () => {
       {user && (
         <div className=" flex p-2">
           <img
-            className="w-12 h-12"
+            className="w-10 h-10 mx-1.5 my-5"
             alt="usericon"
             src={USER_AVATAR}
           />
